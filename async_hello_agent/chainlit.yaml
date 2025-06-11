@@ -1,0 +1,34 @@
+# Chainlit configuration file
+# See https://docs.chainlit.io/references/chainlit-config for all available options
+
+# UI customization
+ui:
+  name: "AI Assistant"
+  description: "Your helpful AI assistant powered by Gemini"
+  theme: "light"  # or "dark"
+  favicon: "🤖"  # emoji or path to image
+  hide_cot: false  # hide chain of thought
+  default_collapse_content: false
+  default_expanded_messages: true
+
+# Features configuration
+features:
+  multi_modal: true  # enable image upload
+  persistent_chat: true  # save chat history
+  prompt_playground: true  # enable prompt playground
+
+# Chat settings
+chat:
+  input_placeholder: "Type your message here..."
+  welcome_message: "Welcome! How can I help you today?"
+  show_avatar: true
+  show_typing: true
+
+# Security settings
+security:
+  require_auth: false  # set to true to require authentication
+  allowed_origins: ["*"]  # CORS settings
+
+# Environment variables
+env:
+  GEMINI_API_KEY: ""  # your Gemini API key 

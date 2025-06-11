@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from agents import Agent, Runner, AsyncOpenAI, OpenAIChatCompletionsModel
 from agents.run import RunConfig
 import asyncio
+import chainlit as cl
+
 
 load_dotenv()
 
@@ -29,7 +31,18 @@ config = RunConfig(
 
 agent: Agent = Agent(name="Assistant", instructions="You are a helpful assistant", model=model)
 
-result = Runner.run_sync(agent, "Hello, how are you.", run_config=config)
+@cl.on_chat_start
+async def start():
+    await cl.Message(
+        content="Hello! I'm your AI assistant powered by Gemini. How can I help you today?",
+    ).send()
 
-print("\nCALLING AGENT\n")
-print(result.final_output)
+@cl.on_message
+async def main(message: cl.Message):
+    # Get AI response
+    response = Runner.run_sync(agent, message.content, run_config=config)
+    
+    # Send the response
+    await cl.Message(
+        content=response.final_output,
+    ).send()
